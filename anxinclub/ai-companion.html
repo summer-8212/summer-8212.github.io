@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI陪伴 - 安心成长社</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F5F1E9',
+                        secondary: '#E8DDD0',
+                        accent: '#8FB9A8',
+                        wood: '#D4B896',
+                        text: '#333333',
+                        lightText: '#666666'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-sm {
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+            .transition-all-300 {
+                transition: all 300ms ease-in-out;
+            }
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .section-padding {
+            padding: 6rem 0;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+        }
+        .ai-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        .ai-chat {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            width: 300px;
+            max-height: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: none;
+            overflow: hidden;
+        }
+        .small-chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .small-chat-input {
+            border-top: 1px solid #E8DDD0;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-primary text-text">
+    <!-- 导航栏 -->
+    <nav class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+                    <i class="fa fa-heart-o text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-medium">安心成长社</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-accent transition-all-300">首页</a>
+                <a href="growth-map.html" class="hover:text-accent transition-all-300">成长地图</a>
+                <a href="ai-companion.html" class="text-accent font-medium">AI陪伴</a>
+                <a href="community.html" class="hover:text-accent transition-all-300">同频社区</a>
+                <a href="about.html" class="hover:text-accent transition-all-300">关于我</a>
+            </div>
+            <button class="md:hidden text-text text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">AI陪伴践行</h1>
+            <p class="text-lg text-lightText max-w-2xl mx-auto">24小时在线的AI数字分身，陪你走过成长的每一步</p>
+        </div>
+    </section>
+
+    <!-- AI陪伴内容 -->
+    <section class="section-padding bg-primary">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- AI对话窗口 -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="bg-accent text-white p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fa fa-robot mr-2"></i>
+                                    <h3 class="font-medium">AI成长陪伴</h3>
+                                </div>
+                                <span class="text-xs bg-white text-accent px-2 py-1 rounded-full">在线</span>
+                            </div>
+                        </div>
+                        <div class="chat-messages p-4" id="chatMessages">
+                            <div class="flex mb-4">
+                                <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                                    <i class="fa fa-robot"></i>
+                                </div>
+                                <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                                    <p>你好！我是你的AI成长陪伴者，有任何问题随时告诉我。我会用温暖、共情的方式陪伴你成长。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-t border-secondary p-4">
+                            <div class="flex">
+                                <input type="text" placeholder="输入你的问题..." class="flex-1 border border-secondary rounded-l-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                                <button class="bg-secondary text-wood px-3 py-2" onclick="startVoiceInputLarge()">
+                                    <i class="fa fa-microphone"></i>
+                                </button>
+                                <button class="bg-accent text-white rounded-r-full px-4 py-2">
+                                    <i class="fa fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <p class="text-xs text-lightText mt-2">AI仅提供陪伴与践行建议，不替代专业心理咨询/医疗</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 每日践行打卡 -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                        <h3 class="font-semibold text-xl mb-4">每日践行打卡</h3>
+                        <form>
+                            <div class="mb-4">
+                                <textarea placeholder="今天你践行了什么？分享你的成长瞬间..." class="w-full border border-secondary rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-accent/50" rows="4"></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm text-lightText mb-2">添加图片（可选）</label>
+                                <div class="border-2 border-dashed border-secondary rounded-lg p-4 text-center">
+                                    <i class="fa fa-cloud-upload text-3xl text-lightText mb-2"></i>
+                                    <p class="text-sm text-lightText">点击或拖拽图片到此处</p>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-white font-medium py-2 px-4 rounded-full transition-all-300">
+                                提交打卡
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- 成长档案 -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-xl">成长档案</h3>
+                            <a href="#" class="text-accent hover:underline text-sm">查看全部</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-primary rounded-lg p-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium">2026-03-09</span>
+                                    <span class="text-xs bg-accent/10 text-accent px-2 py-0.5 rounded-full">一阶</span>
+                                </div>
+                                <p class="text-sm text-lightText">今天和孩子进行了10分钟的深度倾听练习，感觉沟通更顺畅了。</p>
+                            </div>
+                            <div class="bg-primary rounded-lg p-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium">2026-03-08</span>
+                                    <span class="text-xs bg-accent/10 text-accent px-2 py-0.5 rounded-full">一阶</span>
+                                </div>
+                                <p class="text-sm text-lightText">学习了非暴力沟通的技巧，尝试用"我"语句表达感受。</p>
+                            </div>
+                            <div class="bg-primary rounded-lg p-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium">2026-03-07</span>
+                                    <span class="text-xs bg-accent/10 text-accent px-2 py-0.5 rounded-full">一阶</span>
+                                </div>
+                                <p class="text-sm text-lightText">完成了亲子沟通课程的第一章节，收获很大。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 高频问题知识库 -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-center mb-8">高频问题知识库</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <h3 class="font-semibold text-lg mb-4">亲子关系</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何与叛逆期的孩子沟通？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何处理孩子的情绪问题？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何建立良好的亲子关系？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何平衡工作和家庭？</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <h3 class="font-semibold text-lg mb-4">自我成长</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何克服自我怀疑？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何建立自信？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何减少情绪内耗？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何找到人生目标？</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <h3 class="font-semibold text-lg mb-4">践行方法</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何坚持冥想练习？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何制定有效的成长计划？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何处理成长中的卡点？</a></li>
+                            <li><a href="#" class="text-lightText hover:text-accent flex items-center"><i class="fa fa-angle-right mr-2"></i> 如何保持成长动力？</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">安心成长社</h3>
+                    <p class="text-lightText">从亲子关系破局，一站式整合身心灵成长，陪你不走弯路，同频践行。</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-lightText hover:text-accent">首页</a></li>
+                        <li><a href="growth-map.html" class="text-lightText hover:text-accent">成长地图</a></li>
+                        <li><a href="ai-companion.html" class="text-lightText hover:text-accent">AI陪伴</a></li>
+                        <li><a href="community.html" class="text-lightText hover:text-accent">同频社区</a></li>
+                        <li><a href="about.html" class="text-lightText hover:text-accent">关于我</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">联系方式</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fa fa-weixin text-accent mr-2"></i> <span class="text-lightText">安心成长社</span></li>
+                        <li class="flex items-center"><i class="fa fa-weibo text-accent mr-2"></i> <span class="text-lightText">@安心成长社</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">合规声明</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-lightText hover:text-accent">隐私政策</a></li>
+                        <li><a href="#" class="text-lightText hover:text-accent">免责声明</a></li>
+                        <li><a href="#" class="text-lightText hover:text-accent">未成年人保护</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-secondary mt-8 pt-8 text-center text-lightText">
+                <p>© 2026 安心成长社. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI数字分身悬浮入口 -->
+    <div class="ai-float">
+        <button class="w-16 h-16 rounded-full bg-accent text-white shadow-lg flex items-center justify-center text-2xl" onclick="toggleAIChat()">
+            <i class="fa fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- AI聊天窗口 -->
+    <div class="ai-chat" id="aiChat">
+        <div class="bg-accent text-white p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fa fa-robot mr-2"></i>
+                <h3 class="font-medium">AI成长陪伴</h3>
+            </div>
+            <button onclick="closeAIChat()"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="small-chat-messages" id="smallChatMessages">
+            <div class="flex mb-4">
+                <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                    <i class="fa fa-robot"></i>
+                </div>
+                <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                    <p>你好！我是你的AI成长陪伴者，有任何问题随时告诉我。我会用温暖、共情的方式陪伴你成长。</p>
+                </div>
+            </div>
+        </div>
+        <div class="small-chat-input">
+            <div class="flex">
+                <input type="text" placeholder="输入你的问题..." class="flex-1 border border-secondary rounded-l-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                <button class="bg-secondary text-wood px-3 py-2" onclick="startVoiceInput()">
+                    <i class="fa fa-microphone"></i>
+                </button>
+                <button class="bg-accent text-white rounded-r-full px-4 py-2">
+                    <i class="fa fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="text-xs text-lightText mt-2 px-4">AI仅提供陪伴与践行建议，不替代专业心理咨询/医疗</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChat');
+            chat.style.display = chat.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeAIChat() {
+            document.getElementById('aiChat').style.display = 'none';
+        }
+
+        // 模拟AI回复（大窗口）
+        document.querySelector('.border-t button').addEventListener('click', function() {
+            const input = document.querySelector('.border-t input');
+            const message = input.value.trim();
+            if (message) {
+                // 添加用户消息
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-accent/10 rounded-lg p-3 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-wood ml-2 flex-shrink-0">
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                    </div>
+                `;
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // 模拟AI回复
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                                <p>谢谢你的分享。我能感受到你对成长的渴望。让我们一起一步一步地前进，你不是一个人在战斗。</p>
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // 回车发送消息（大窗口）
+        document.querySelector('.border-t input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.border-t button').click();
+            }
+        });
+
+        // 模拟AI回复（小窗口）
+        document.querySelector('.small-chat-input button').addEventListener('click', function() {
+            const input = document.querySelector('.small-chat-input input');
+            const message = input.value.trim();
+            if (message) {
+                // 添加用户消息
+                const chatMessages = document.getElementById('smallChatMessages');
+                chatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-accent/10 rounded-lg p-3 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-wood ml-2 flex-shrink-0">
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                    </div>
+                `;
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // 模拟AI回复
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                                <p>谢谢你的分享。我能感受到你对成长的渴望。让我们一起一步一步地前进，你不是一个人在战斗。</p>
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // 回车发送消息（小窗口）
+        document.querySelector('.small-chat-input input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.small-chat-input button').click();
+            }
+        });
+
+        // 语音输入功能（小窗口）
+        function startVoiceInput() {
+            const input = document.querySelector('.small-chat-input input');
+            const microphoneBtn = document.querySelector('.small-chat-input button:first-of-type');
+            
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                
+                recognition.lang = 'zh-CN';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.onstart = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone-slash"></i>';
+                    microphoneBtn.classList.remove('bg-secondary', 'text-wood');
+                    microphoneBtn.classList.add('bg-accent', 'text-white');
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    input.value = transcript;
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('语音识别错误:', event.error);
+                };
+                
+                recognition.onend = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone"></i>';
+                    microphoneBtn.classList.remove('bg-accent', 'text-white');
+                    microphoneBtn.classList.add('bg-secondary', 'text-wood');
+                };
+                
+                recognition.start();
+            } else {
+                alert('您的浏览器不支持语音识别功能，请使用Chrome浏览器。');
+            }
+        }
+
+        // 语音输入功能（大窗口）
+        function startVoiceInputLarge() {
+            const input = document.querySelector('.border-t input');
+            const microphoneBtn = document.querySelector('.border-t button:first-of-type');
+            
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                
+                recognition.lang = 'zh-CN';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.onstart = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone-slash"></i>';
+                    microphoneBtn.classList.remove('bg-secondary', 'text-wood');
+                    microphoneBtn.classList.add('bg-accent', 'text-white');
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    input.value = transcript;
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('语音识别错误:', event.error);
+                };
+                
+                recognition.onend = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone"></i>';
+                    microphoneBtn.classList.remove('bg-accent', 'text-white');
+                    microphoneBtn.classList.add('bg-secondary', 'text-wood');
+                };
+                
+                recognition.start();
+            } else {
+                alert('您的浏览器不支持语音识别功能，请使用Chrome浏览器。');
+            }
+        }
+
+        // 模拟打卡提交
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const textarea = document.querySelector('textarea');
+            const message = textarea.value.trim();
+            if (message) {
+                alert('打卡成功！AI会为你提供反馈。');
+                textarea.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

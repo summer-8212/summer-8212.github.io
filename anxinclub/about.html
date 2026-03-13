@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 - 安心成长社</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F5F1E9',
+                        secondary: '#E8DDD0',
+                        accent: '#8FB9A8',
+                        wood: '#D4B896',
+                        text: '#333333',
+                        lightText: '#666666'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-sm {
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+            .transition-all-300 {
+                transition: all 300ms ease-in-out;
+            }
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .section-padding {
+            padding: 6rem 0;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .ai-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        .ai-chat {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            width: 300px;
+            max-height: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: none;
+            overflow: hidden;
+        }
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .chat-input {
+            border-top: 1px solid #E8DDD0;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-primary text-text">
+    <!-- 导航栏 -->
+    <nav class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+                    <i class="fa fa-heart-o text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-medium">安心成长社</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-accent transition-all-300">首页</a>
+                <a href="growth-map.html" class="hover:text-accent transition-all-300">成长地图</a>
+                <a href="ai-companion.html" class="hover:text-accent transition-all-300">AI陪伴</a>
+                <a href="community.html" class="hover:text-accent transition-all-300">同频社区</a>
+                <a href="about.html" class="text-accent font-medium">关于我</a>
+            </div>
+            <button class="md:hidden text-text text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">关于我</h1>
+            <p class="text-lg text-lightText max-w-2xl mx-auto">我的成长故事、践行理念与价值观</p>
+        </div>
+    </section>
+
+    <!-- 我的成长故事 -->
+    <section class="section-padding bg-primary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-16">
+                    <div class="md:w-1/3 mb-6 md:mb-0">
+                        <div class="w-48 h-48 mx-auto rounded-full bg-secondary flex items-center justify-center">
+                            <i class="fa fa-user-o text-6xl text-wood"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 md:pl-8">
+                        <h2 class="text-2xl font-semibold mb-4">我的成长故事</h2>
+                        <p class="text-lightText mb-4">大家好，我是安心成长社的主理人。曾经的我，是一个被亲子关系困扰、身体疲惫、情绪内耗的妈妈。在孩子的叛逆期，我尝试了各种教育方法，却始终找不到有效的解决方案。</p>
+                        <p class="text-lightText mb-4">在不断的探索和实践中，我逐渐意识到，亲子关系的问题不仅仅是教育方法的问题，更是自我成长的问题。于是，我开始了一段从亲子教育到身体筑基，再到心理疗愈和自我整合的成长之旅。</p>
+                        <p class="text-lightText">现在，我希望用自己亲测踩坑的经验，为更多和我曾经一样的妈妈们提供帮助，让大家少走弯路，实现身心整合的松弛成长。</p>
+                    </div>
+                </div>
+
+                <!-- 我的践行理念 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm mb-16">
+                    <h2 class="text-2xl font-semibold mb-6">我的践行理念</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white mr-4 flex-shrink-0">
+                                <i class="fa fa-leaf"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">循序渐进</h3>
+                                <p class="text-lightText">成长是一个过程，需要循序渐进，不能急于求成。我相信每个阶段都有其独特的价值和意义。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white mr-4 flex-shrink-0">
+                                <i class="fa fa-heart"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">温暖陪伴</h3>
+                                <p class="text-lightText">成长不是孤独的旅程，需要温暖的陪伴和支持。我希望为大家创造一个有归属感的成长环境。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white mr-4 flex-shrink-0">
+                                <i class="fa fa-check-circle"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">落地践行</h3>
+                                <p class="text-lightText">知识只有通过实践才能转化为成长。我注重课程内容的实际应用和落地践行。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white mr-4 flex-shrink-0">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">同频成长</h3>
+                                <p class="text-lightText">同频的伙伴能相互鼓励、相互支持，一起走得更远。我希望搭建一个同频成长的社区。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 我的核心价值观 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm mb-16">
+                    <h2 class="text-2xl font-semibold mb-6">我的核心价值观</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white text-xs mr-3 flex-shrink-0">1</div>
+                            <p class="text-lightText">拒绝焦虑营销，传递真实、温暖的成长理念</p>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white text-xs mr-3 flex-shrink-0">2</div>
+                            <p class="text-lightText">亲测有效，只推荐真正有价值的成长课程</p>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white text-xs mr-3 flex-shrink-0">3</div>
+                            <p class="text-lightText">注重落地践行，帮助用户真正实现成长改变</p>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white text-xs mr-3 flex-shrink-0">4</div>
+                            <p class="text-lightText">创造同频成长环境，让成长不再孤独</p>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-white text-xs mr-3 flex-shrink-0">5</div>
+                            <p class="text-lightText">保持开放和谦逊，持续学习和成长</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 我的选课铁规 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm mb-16">
+                    <h2 class="text-2xl font-semibold mb-6">我的选课铁规</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold mr-4 flex-shrink-0">1</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">我自己完整学完、亲测有效</h4>
+                                <p class="text-lightText">每一门推荐的课程，我都亲自完整学习并实践，确保其有效性和实用性。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold mr-4 flex-shrink-0">2</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">老师专业靠谱、不制造焦虑</h4>
+                                <p class="text-lightText">严格筛选老师背景和教学风格，确保专业可靠，不通过制造焦虑来营销。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold mr-4 flex-shrink-0">3</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">贴合我的四阶成长体系</h4>
+                                <p class="text-lightText">课程内容必须符合我的四阶成长体系，能够帮助用户循序渐进地成长。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold mr-4 flex-shrink-0">4</div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">我愿意推荐给至亲好友</h4>
+                                <p class="text-lightText">只有我认为真正有价值的课程，才会推荐给你，就像推荐给我的至亲好友一样。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 内容分发渠道 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm mb-16">
+                    <h2 class="text-2xl font-semibold mb-6">我的内容分发渠道</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <a href="#" class="flex flex-col items-center p-4 border border-secondary rounded-lg hover:border-accent transition-all-300 card-hover">
+                            <div class="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-4">
+                                <i class="fa fa-play-circle text-3xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">短视频</h3>
+                            <p class="text-lightText text-center">分享成长小贴士和践行经验</p>
+                        </a>
+                        <a href="#" class="flex flex-col items-center p-4 border border-secondary rounded-lg hover:border-accent transition-all-300 card-hover">
+                            <div class="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-4">
+                                <i class="fa fa-video-camera text-3xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">直播</h3>
+                            <p class="text-lightText text-center">定期分享成长主题和答疑</p>
+                        </a>
+                        <a href="#" class="flex flex-col items-center p-4 border border-secondary rounded-lg hover:border-accent transition-all-300 card-hover">
+                            <div class="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-4">
+                                <i class="fa fa-weixin text-3xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">私域</h3>
+                            <p class="text-lightText text-center">深度陪伴和专属成长支持</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 一对一成长咨询 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <h2 class="text-2xl font-semibold mb-6">一对一成长咨询</h2>
+                    <div class="mb-6">
+                        <p class="text-lightText mb-4">如果你需要更深度的成长陪伴和个性化的指导，我提供一对一的成长咨询服务。</p>
+                        <p class="text-lightText mb-4">咨询内容包括：</p>
+                        <ul class="space-y-2 text-lightText">
+                            <li class="flex items-center"><i class="fa fa-check-circle text-accent mr-2"></i> 亲子关系问题分析与解决方案</li>
+                            <li class="flex items-center"><i class="fa fa-check-circle text-accent mr-2"></i> 个人成长卡点突破</li>
+                            <li class="flex items-center"><i class="fa fa-check-circle text-accent mr-2"></i> 成长路径规划</li>
+                            <li class="flex items-center"><i class="fa fa-check-circle text-accent mr-2"></i> 践行方法指导</li>
+                        </ul>
+                    </div>
+                    <div class="bg-primary rounded-lg p-6">
+                        <h3 class="font-semibold text-lg mb-4">预约方式</h3>
+                        <p class="text-lightText mb-4">添加我的微信：<span class="font-medium">安心成长社</span>，备注「咨询预约」</p>
+                        <p class="text-lightText">咨询费用：<span class="font-medium">300元/小时</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">安心成长社</h3>
+                    <p class="text-lightText">从亲子关系破局，一站式整合身心灵成长，陪你不走弯路，同频践行。</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-lightText hover:text-accent">首页</a></li>
+                        <li><a href="growth-map.html" class="text-lightText hover:text-accent">成长地图</a></li>
+                        <li><a href="ai-companion.html" class="text-lightText hover:text-accent">AI陪伴</a></li>
+                        <li><a href="community.html" class="text-lightText hover:text-accent">同频社区</a></li>
+                        <li><a href="about.html" class="text-lightText hover:text-accent">关于我</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">联系方式</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fa fa-weixin text-accent mr-2"></i> <span class="text-lightText">安心成长社</span></li>
+                        <li class="flex items-center"><i class="fa fa-weibo text-accent mr-2"></i> <span class="text-lightText">@安心成长社</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">合规声明</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-lightText hover:text-accent">隐私政策</a></li>
+                        <li><a href="#" class="text-lightText hover:text-accent">免责声明</a></li>
+                        <li><a href="#" class="text-lightText hover:text-accent">未成年人保护</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-secondary mt-8 pt-8 text-center text-lightText">
+                <p>© 2026 安心成长社. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI数字分身悬浮入口 -->
+    <div class="ai-float">
+        <button class="w-16 h-16 rounded-full bg-accent text-white shadow-lg flex items-center justify-center text-2xl" onclick="toggleAIChat()">
+            <i class="fa fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- AI聊天窗口 -->
+    <div class="ai-chat" id="aiChat">
+        <div class="bg-accent text-white p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fa fa-robot mr-2"></i>
+                <h3 class="font-medium">AI成长陪伴</h3>
+            </div>
+            <button onclick="closeAIChat()"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="flex mb-4">
+                <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                    <i class="fa fa-robot"></i>
+                </div>
+                <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                    <p>你好！我是你的AI成长陪伴者，有任何问题随时告诉我。我会用温暖、共情的方式陪伴你成长。</p>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <div class="flex">
+                <input type="text" placeholder="输入你的问题..." class="flex-1 border border-secondary rounded-l-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                <button class="bg-secondary text-wood px-3 py-2" onclick="startVoiceInput()">
+                    <i class="fa fa-microphone"></i>
+                </button>
+                <button class="bg-accent text-white rounded-r-full px-4 py-2">
+                    <i class="fa fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="text-xs text-lightText mt-2 px-4">AI仅提供陪伴与践行建议，不替代专业心理咨询/医疗</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChat');
+            chat.style.display = chat.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeAIChat() {
+            document.getElementById('aiChat').style.display = 'none';
+        }
+
+        // 模拟AI回复
+        document.querySelector('.chat-input button').addEventListener('click', function() {
+            const input = document.querySelector('.chat-input input');
+            const message = input.value.trim();
+            if (message) {
+                // 添加用户消息
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-accent/10 rounded-lg p-3 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-wood ml-2 flex-shrink-0">
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                    </div>
+                `;
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // 模拟AI回复
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                                <p>谢谢你的分享。我能感受到你对成长的渴望。让我们一起一步一步地前进，你不是一个人在战斗。</p>
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // 回车发送消息
+        document.querySelector('.chat-input input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.chat-input button').click();
+            }
+        });
+
+        // 语音输入功能
+        function startVoiceInput() {
+            const input = document.querySelector('.chat-input input');
+            const microphoneBtn = document.querySelector('.chat-input button:first-of-type');
+            
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                
+                recognition.lang = 'zh-CN';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.onstart = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone-slash"></i>';
+                    microphoneBtn.classList.remove('bg-secondary', 'text-wood');
+                    microphoneBtn.classList.add('bg-accent', 'text-white');
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    input.value = transcript;
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('语音识别错误:', event.error);
+                };
+                
+                recognition.onend = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone"></i>';
+                    microphoneBtn.classList.remove('bg-accent', 'text-white');
+                    microphoneBtn.classList.add('bg-secondary', 'text-wood');
+                };
+                
+                recognition.start();
+            } else {
+                alert('您的浏览器不支持语音识别功能，请使用Chrome浏览器。');
+            }
+        }
+    </script>
+</body>
+</html>

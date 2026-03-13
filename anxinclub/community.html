@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同频社区 - 安心成长社</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F5F1E9',
+                        secondary: '#E8DDD0',
+                        accent: '#8FB9A8',
+                        wood: '#D4B896',
+                        text: '#333333',
+                        lightText: '#666666'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-sm {
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+            .transition-all-300 {
+                transition: all 300ms ease-in-out;
+            }
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .section-padding {
+            padding: 6rem 0;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .ai-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        .ai-chat {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            width: 300px;
+            max-height: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: none;
+            overflow: hidden;
+        }
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .chat-input {
+            border-top: 1px solid #E8DDD0;
+            padding: 0.5rem;
+        }
+        .tab-active {
+            border-bottom: 2px solid #8FB9A8;
+            color: #8FB9A8;
+        }
+    </style>
+</head>
+<body class="bg-primary text-text">
+    <!-- 导航栏 -->
+    <nav class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+                    <i class="fa fa-heart-o text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-medium">安心成长社</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-accent transition-all-300">首页</a>
+                <a href="growth-map.html" class="hover:text-accent transition-all-300">成长地图</a>
+                <a href="ai-companion.html" class="hover:text-accent transition-all-300">AI陪伴</a>
+                <a href="community.html" class="text-accent font-medium">同频社区</a>
+                <a href="about.html" class="hover:text-accent transition-all-300">关于我</a>
+            </div>
+            <button class="md:hidden text-text text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">同频社区</h1>
+            <p class="text-lg text-lightText max-w-2xl mx-auto">与同频伙伴一起成长，分享践行心得，互相鼓励支持</p>
+        </div>
+    </section>
+
+    <!-- 社区内容 -->
+    <section class="section-padding bg-primary">
+        <div class="container mx-auto px-4">
+            <!-- 发帖按钮 -->
+            <div class="mb-8 text-center">
+                <button class="bg-accent hover:bg-accent/90 text-white font-medium py-3 px-8 rounded-full shadow-md transition-all-300 text-lg" onclick="openPostModal()">
+                    <i class="fa fa-pencil mr-2"></i> 分享你的成长
+                </button>
+            </div>
+
+            <!-- 阶段标签 -->
+            <div class="flex flex-wrap justify-center mb-8 border-b border-secondary">
+                <button class="px-6 py-3 font-medium tab-active">全部</button>
+                <button class="px-6 py-3 font-medium text-lightText hover:text-accent">一阶·亲子破局</button>
+                <button class="px-6 py-3 font-medium text-lightText hover:text-accent">二阶·身体筑基</button>
+                <button class="px-6 py-3 font-medium text-lightText hover:text-accent">三阶·自我整合</button>
+                <button class="px-6 py-3 font-medium text-lightText hover:text-accent">四阶·全关系圆满</button>
+            </div>
+
+            <!-- 帖子列表 -->
+            <div class="space-y-6">
+                <!-- 帖子1 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+                            <i class="fa fa-user-o text-wood"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">李女士</h4>
+                            <p class="text-sm text-lightText">2026-03-09 · 一阶·亲子破局</p>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">今天和孩子的沟通有了突破性进展！</h3>
+                    <p class="text-lightText mb-4">按照课程里教的非暴力沟通技巧，我试着用"我"语句表达感受，孩子居然主动和我分享了他的想法。这是我们很久以来第一次真正的交流，感觉特别好！</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-6">
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-heart-o mr-1"></i> <span>24</span>
+                            </button>
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-comment-o mr-1"></i> <span>8</span>
+                            </button>
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-bookmark-o mr-1"></i> <span>5</span>
+                            </button>
+                        </div>
+                        <div>
+                            <span class="text-xs bg-accent/10 text-accent px-2 py-0.5 rounded-full">精华</span>
+                        </div>
+                    </div>
+                    <!-- 评论区 -->
+                    <div class="mt-4 pt-4 border-t border-secondary">
+                        <h5 class="font-medium mb-3">评论</h5>
+                        <div class="space-y-3">
+                            <div class="flex">
+                                <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-user-o text-wood text-sm"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-1">
+                                        <span class="font-medium text-sm">王女士</span>
+                                        <span class="text-xs text-lightText ml-2">2026-03-09</span>
+                                    </div>
+                                    <p class="text-sm text-lightText">太棒了！我也在尝试非暴力沟通，确实很有效果。</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-user-o text-wood text-sm"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-1">
+                                        <span class="font-medium text-sm">张女士</span>
+                                        <span class="text-xs text-lightText ml-2">2026-03-09</span>
+                                    </div>
+                                    <p class="text-sm text-lightText">能具体分享一下你是怎么做的吗？我也想尝试。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <input type="text" placeholder="写下你的评论..." class="w-full border border-secondary rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/50 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子2 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+                            <i class="fa fa-user-o text-wood"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">王女士</h4>
+                            <p class="text-sm text-lightText">2026-03-08 · 二阶·身体筑基</p>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">坚持冥想第30天，感觉整个人都不一样了</h3>
+                    <p class="text-lightText mb-4">从最开始的5分钟都坐不住，到现在每天能坚持15分钟。睡眠质量明显改善，情绪也稳定了很多。推荐大家都试试！</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-6">
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-heart-o mr-1"></i> <span>36</span>
+                            </button>
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-comment-o mr-1"></i> <span>12</span>
+                            </button>
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-bookmark-o mr-1"></i> <span>8</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子3 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+                            <i class="fa fa-user-o text-wood"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">张女士</h4>
+                            <p class="text-sm text-lightText">2026-03-07 · 三阶·自我整合</p>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">学会自我接纳后，生活变得轻松了很多</h3>
+                    <p class="text-lightText mb-4">以前总是自我否定，觉得自己不够好。通过自我整合的学习，我开始接纳自己的不完美，发现自己其实已经很努力了。现在每天都能感受到自己的成长，这种感觉很棒！</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-6">
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-heart-o mr-1"></i> <span>42</span>
+                            </button>
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-comment-o mr-1"></i> <span>15</span>
+                            </button>
+                            <button class="flex items-center text-lightText hover:text-accent">
+                                <i class="fa fa-bookmark-o mr-1"></i> <span>10</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 官方精华区 -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-center mb-8">官方精华区</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white mr-4">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">官方</h4>
+                                <p class="text-sm text-lightText">2026-03-01</p>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-3">亲子沟通的5个实用技巧</h3>
+                        <p class="text-lightText mb-4">1. 倾听比说教更重要；2. 用"我"语句表达感受；3. 给孩子选择的权利；4. 建立明确的边界；5. 及时肯定和鼓励。</p>
+                        <a href="#" class="text-accent hover:underline font-medium">查看全文</a>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white mr-4">
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">官方</h4>
+                                <p class="text-sm text-lightText">2026-02-28</p>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-3">如何建立良好的自我对话</h3>
+                        <p class="text-lightText mb-4">1. 觉察自己的负面思维；2. 用积极的语言替代消极语言；3. 学会自我慈悲；4. 记录自己的成长；5. 与自己和解。</p>
+                        <a href="#" class="text-accent hover:underline font-medium">查看全文</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 发帖模态框 -->
+    <div id="postModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-semibold text-xl">分享你的成长</h3>
+                <button onclick="closePostModal()"><i class="fa fa-times text-lightText"></i></button>
+            </div>
+            <form>
+                <div class="mb-4">
+                    <select class="w-full border border-secondary rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                        <option>选择成长阶段</option>
+                        <option>一阶·亲子破局</option>
+                        <option>二阶·身体筑基</option>
+                        <option>三阶·自我整合</option>
+                        <option>四阶·全关系圆满</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <input type="text" placeholder="标题" class="w-full border border-secondary rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                </div>
+                <div class="mb-4">
+                    <textarea placeholder="分享你的践行心得、成长感悟..." class="w-full border border-secondary rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-accent/50" rows="4"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-lightText mb-2">添加图片（可选）</label>
+                    <div class="border-2 border-dashed border-secondary rounded-lg p-4 text-center">
+                        <i class="fa fa-cloud-upload text-3xl text-lightText mb-2"></i>
+                        <p class="text-sm text-lightText">点击或拖拽图片到此处</p>
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button type="button" class="flex-1 border border-secondary text-lightText font-medium py-2 px-4 rounded-full transition-all-300" onclick="closePostModal()">
+                        取消
+                    </button>
+                    <button type="submit" class="flex-1 bg-accent hover:bg-accent/90 text-white font-medium py-2 px-4 rounded-full transition-all-300">
+                        发布
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">安心成长社</h3>
+                    <p class="text-lightText">从亲子关系破局，一站式整合身心灵成长，陪你不走弯路，同频践行。</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-lightText hover:text-accent">首页</a></li>
+                        <li><a href="growth-map.html" class="text-lightText hover:text-accent">成长地图</a></li>
+                        <li><a href="ai-companion.html" class="text-lightText hover:text-accent">AI陪伴</a></li>
+                        <li><a href="community.html" class="text-lightText hover:text-accent">同频社区</a></li>
+                        <li><a href="about.html" class="text-lightText hover:text-accent">关于我</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">联系方式</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fa fa-weixin text-accent mr-2"></i> <span class="text-lightText">安心成长社</span></li>
+                        <li class="flex items-center"><i class="fa fa-weibo text-accent mr-2"></i> <span class="text-lightText">@安心成长社</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">合规声明</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-lightText hover:text-accent">隐私政策</a></li>
+                        <li><a href="#" class="text-lightText hover:text-accent">免责声明</a></li>
+                        <li><a href="#" class="text-lightText hover:text-accent">未成年人保护</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-secondary mt-8 pt-8 text-center text-lightText">
+                <p>© 2026 安心成长社. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI数字分身悬浮入口 -->
+    <div class="ai-float">
+        <button class="w-16 h-16 rounded-full bg-accent text-white shadow-lg flex items-center justify-center text-2xl" onclick="toggleAIChat()">
+            <i class="fa fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- AI聊天窗口 -->
+    <div class="ai-chat" id="aiChat">
+        <div class="bg-accent text-white p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fa fa-robot mr-2"></i>
+                <h3 class="font-medium">AI成长陪伴</h3>
+            </div>
+            <button onclick="closeAIChat()"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="flex mb-4">
+                <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                    <i class="fa fa-robot"></i>
+                </div>
+                <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                    <p>你好！我是你的AI成长陪伴者，有任何问题随时告诉我。我会用温暖、共情的方式陪伴你成长。</p>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <div class="flex">
+                <input type="text" placeholder="输入你的问题..." class="flex-1 border border-secondary rounded-l-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/50">
+                <button class="bg-secondary text-wood px-3 py-2" onclick="startVoiceInput()">
+                    <i class="fa fa-microphone"></i>
+                </button>
+                <button class="bg-accent text-white rounded-r-full px-4 py-2">
+                    <i class="fa fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="text-xs text-lightText mt-2 px-4">AI仅提供陪伴与践行建议，不替代专业心理咨询/医疗</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChat');
+            chat.style.display = chat.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeAIChat() {
+            document.getElementById('aiChat').style.display = 'none';
+        }
+
+        function openPostModal() {
+            document.getElementById('postModal').classList.remove('hidden');
+        }
+
+        function closePostModal() {
+            document.getElementById('postModal').classList.add('hidden');
+        }
+
+        // 模拟AI回复
+        document.querySelector('.chat-input button').addEventListener('click', function() {
+            const input = document.querySelector('.chat-input input');
+            const message = input.value.trim();
+            if (message) {
+                // 添加用户消息
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-accent/10 rounded-lg p-3 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-wood ml-2 flex-shrink-0">
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                    </div>
+                `;
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // 模拟AI回复
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white mr-2 flex-shrink-0">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-primary rounded-lg p-3 max-w-[80%]">
+                                <p>谢谢你的分享。我能感受到你对成长的渴望。让我们一起一步一步地前进，你不是一个人在战斗。</p>
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        });
+
+        // 回车发送消息
+        document.querySelector('.chat-input input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.chat-input button').click();
+            }
+        });
+
+        // 语音输入功能
+        function startVoiceInput() {
+            const input = document.querySelector('.chat-input input');
+            const microphoneBtn = document.querySelector('.chat-input button:first-of-type');
+            
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                
+                recognition.lang = 'zh-CN';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.onstart = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone-slash"></i>';
+                    microphoneBtn.classList.remove('bg-secondary', 'text-wood');
+                    microphoneBtn.classList.add('bg-accent', 'text-white');
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    input.value = transcript;
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('语音识别错误:', event.error);
+                };
+                
+                recognition.onend = function() {
+                    microphoneBtn.innerHTML = '<i class="fa fa-microphone"></i>';
+                    microphoneBtn.classList.remove('bg-accent', 'text-white');
+                    microphoneBtn.classList.add('bg-secondary', 'text-wood');
+                };
+                
+                recognition.start();
+            } else {
+                alert('您的浏览器不支持语音识别功能，请使用Chrome浏览器。');
+            }
+        }
+
+        // 模拟发帖提交
+        document.querySelector('#postModal form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('发布成功！');
+            closePostModal();
+        });
+
+        // 模拟点赞功能
+        document.querySelectorAll('.fa-heart-o').forEach(heart => {
+            heart.addEventListener('click', function() {
+                if (this.classList.contains('fa-heart-o')) {
+                    this.classList.remove('fa-heart-o');
+                    this.classList.add('fa-heart');
+                    this.parentElement.classList.add('text-accent');
+                    this.parentElement.classList.remove('text-lightText');
+                    // 增加点赞数
+                    const count = this.nextElementSibling;
+                    count.textContent = parseInt(count.textContent) + 1;
+                } else {
+                    this.classList.remove('fa-heart');
+                    this.classList.add('fa-heart-o');
+                    this.parentElement.classList.remove('text-accent');
+                    this.parentElement.classList.add('text-lightText');
+                    // 减少点赞数
+                    const count = this.nextElementSibling;
+                    count.textContent = parseInt(count.textContent) - 1;
+                }
+            });
+        });
+
+        // 模拟收藏功能
+        document.querySelectorAll('.fa-bookmark-o').forEach(bookmark => {
+            bookmark.addEventListener('click', function() {
+                if (this.classList.contains('fa-bookmark-o')) {
+                    this.classList.remove('fa-bookmark-o');
+                    this.classList.add('fa-bookmark');
+                    this.parentElement.classList.add('text-accent');
+                    this.parentElement.classList.remove('text-lightText');
+                    // 增加收藏数
+                    const count = this.nextElementSibling;
+                    count.textContent = parseInt(count.textContent) + 1;
+                } else {
+                    this.classList.remove('fa-bookmark');
+                    this.classList.add('fa-bookmark-o');
+                    this.parentElement.classList.remove('text-accent');
+                    this.parentElement.classList.add('text-lightText');
+                    // 减少收藏数
+                    const count = this.nextElementSibling;
+                    count.textContent = parseInt(count.textContent) - 1;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
